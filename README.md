@@ -52,7 +52,7 @@ cd fibrohash
 Running FibroHash
 To generate a password using FibroHash, run the following command:
 
-sh
+```sh
 Copy code
 ./init.sh or python3 main.py if you are not using linux
 This command will execute main.py, which contains the core logic for generating the password. Ensure that fibrohash.start has execute permissions:
