@@ -101,6 +101,6 @@ def generate_password(user_input):
     return final_password
 
 # Example usage
-user_input = input("Enter three unique symbols to customize your password: ")
+user_input = input("Enter a string with at least 3 unique characters: ")
 password = generate_password(user_input)
 print("Generated Password:", password)
