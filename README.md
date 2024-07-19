@@ -53,7 +53,7 @@ Running FibroHash
 To generate a password using FibroHash, run the following command:
 
 
-
+```sh
 ./init.sh    # On Linux systems
 python3 main.py    # On non-Linux systems
 
