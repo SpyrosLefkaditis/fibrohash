@@ -59,7 +59,7 @@ This command will execute main.py, which contains the core logic for generating 
 
 sh
 Copy code
-chmod +x fibrohash.start
+chmod +x init.sh
 Explanation
 FibroHash uses a unique approach for generating passwords:
 
