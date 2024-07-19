@@ -101,6 +101,6 @@ def generate_password(user_input):
     return final_password
 
 # Example usage
-user_input = input("Enter a string with at least 3 unique characters: ")
+user_input = input("Please enter a string with at least 3 unique characters. For added security, try to include at least one uppercase letter in the first three characters: ")
 password = generate_password(user_input)
 print("Generated Password:", password)
