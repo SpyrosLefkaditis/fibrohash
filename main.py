@@ -1,5 +1,62 @@
-# Init
-# Manually created ASCII art for "FibroHash"
+import random
+import os
+
+# Extended character set to include symbols for the final password
+extended_charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?{}[]|'
+
+# Function to generate a random large Fibonacci number with 'n_digits' digits
+def generate_large_fibonacci(n_digits):
+    a, b = random.randint(10**(n_digits - 1), 10**n_digits), random.randint(10**(n_digits - 1), 10**n_digits)
+    fib_sequence = [a, b]
+
+    while len(str(fib_sequence[-1])) < n_digits:  # Keep generating until we get a Fibonacci number with enough digits
+        a, b = b, a + b
+        fib_sequence.append(b)
+
+    return fib_sequence[-1]
+
+# Function to convert a number to a custom Base64 (using the extended charset)
+def to_extended_charset(n):
+    if n == 0:
+        return extended_charset[0]
+    digits = []
+    while n:
+        digits.append(extended_charset[n % len(extended_charset)])
+        n //= len(extended_charset)
+    return ''.join(digits[::-1])
+
+# Function to generate a password based on random Fibonacci numbers and user input
+def generate_password(user_input, password_length=16, num_fib_numbers=100, fib_digit_length=100):
+    # Generate random Fibonacci numbers
+    fib_numbers = [generate_large_fibonacci(fib_digit_length) for _ in range(num_fib_numbers)]
+
+    # Convert the user input into a list of integers (based on ASCII values)
+    input_values = [ord(c) for c in user_input]
+
+    # Start generating the password by iterating over the Fibonacci numbers and user input values
+    password_parts = []
+
+    for i in range(password_length // 4):  # Generate multiple parts of the password
+        # Select a random Fibonacci number and a part of the user input
+        selected_fib = random.choice(fib_numbers)
+        input_part = input_values[i % len(input_values)]  # Wrap around if user input is shorter than password length
+
+        # Combine the selected Fibonacci number with the input part using bitwise XOR
+        combined_result = selected_fib ^ input_part
+
+        # Apply bitwise shifting to add complexity
+        shifted_result = combined_result << 5  # Left shift for added complexity
+        masked_result = shifted_result & 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF  # Masking to keep it within bounds
+
+        # Convert the masked result to a custom extended charset
+        part = to_extended_charset(masked_result)
+        password_parts.append(part)
+
+    # Combine all the parts and return the password
+    final_password = ''.join(password_parts)
+    return final_password[:password_length]  # Trim to the desired password length
+
+# ASCII Art Representation of "fibrohash"
 ascii_art = '''
 $$$$$$$$\\ $$$$$$\\ $$$$$$$\\  $$$$$$$\\   $$$$$$\\  $$\\   $$\\  $$$$$$\\   $$$$$$\\  $$\\   $$\\
 $$  _____|\\_$$  _|$$  __$$\\ $$  __$$\\ $$  __$$\\ $$ |  $$ |$$  __$$\\ $$  __$$\\ $$ |  $$ |
@@ -11,96 +68,12 @@ $$ |      $$$$$$\\ $$$$$$$  |$$ |  $$ | $$$$$$  |$$ |  $$ |$$ |  $$ |\\$$$$$$  |
 \\__|      \\______|\\_______/ \\__|  \\__| \\______/ \\__|  \\__|\\__|  \\__| \\______/ \\__|  \\__|
 '''
 
-# Print the ASCII art
-print(ascii_art)
-
-# Define the base-34 character set (with lowercase letters)
-base34_chars = '0123456789abcdefghijklmnopqrstuvwxyz'
-
-# Provided Fibonacci numbers
-fib_35_to_45 = [9227465, 14930352, 24157817, 39088169, 63245986, 102334155, 165580141, 267914296, 433494437, 701408733, 1134903170]
-fib_100_to_110 = [
-    354224848179261915075, 573147844013817084101, 927372692193078999176, 1500520536206896083277,
-    2427893228399975082453, 3928413764606871165730, 6356306993006846248183, 10284720757613717413913,
-    16641027750620563662096, 26925748508234281076009, 43566776258854844738105
-]
-
-# Function to convert a number to a custom base
-def to_base(n, base):
-    if n == 0:
-        return base34_chars[0]
-    digits = []
-    while n:
-        digits.append(base34_chars[n % base])
-        n //= base
-    return ''.join(digits[::-1])
-
-# Function to calculate password based on user input and Fibonacci numbers
-def generate_password(user_input):
-    # Check that user input is at least 3 characters long
-    if len(user_input) < 3:
-        raise ValueError("User input must be at least 3 characters long")
-
-    # Sum of Fibonacci numbers from 35 to 45
-    sum_35_to_45 = sum(fib_35_to_45)
-
-    # Sum of Fibonacci numbers from 100 to 110
-    sum_100_to_110 = sum(fib_100_to_110)
-
-    # Calculate the ASCII sum of the first 3 characters of user input
-    ascii_sum = sum(ord(char) for char in user_input[:3])
-
-    # Divide the sums of the Fibonacci sequences by the ASCII sum
-    if ascii_sum == 0:
-        raise ValueError("ASCII sum of the first 3 characters is 0, division by zero is not allowed")
-
-    divided_sum_35_to_45 = sum_35_to_45 // ascii_sum
-    divided_sum_100_to_110 = sum_100_to_110 // ascii_sum
-
-    # Perform bitwise OR operation on the two divided results
-    combined_result = divided_sum_35_to_45 | divided_sum_100_to_110
-
-    # Convert the combined result to base-34
-    base34_password = to_base(combined_result, 34)
-
-    # Capitalize specific positions (e.g., 32nd and 4th characters in base-34 password)
-    # Ensure the base-34 password is long enough
-    base34_password = list(base34_password)
-
-    if len(base34_password) >= 32:
-        base34_password[31] = base34_password[31].upper()  # 32nd character (0-based index 31)
-
-    if len(base34_password) >= 4:
-        base34_password[3] = base34_password[3].upper()  # 4th character (0-based index 3)
-
-    base34_password = ''.join(base34_password)
-
-    # Extract the last three characters of the base-34 password
-    if len(base34_password) >= 3:
-        last_three_chars = base34_password[-3:]
-    else:
-        last_three_chars = base34_password  # Handle short passwords
-
-    # Convert last three characters to a number in base-34
-    last_three_num = sum(base34_chars.index(c) * (34 ** i) for i, c in enumerate(reversed(last_three_chars)))
-
-    # Multiply by 3.4552 and take the integer part
-    modified_number = int(last_three_num * 3.4552)
-
-    # Convert the result to a base-34 string and use only lowercase letters
-    modified_base34 = to_base(modified_number, 34)
-    modified_base34 = modified_base34.lower()  # Ensure lowercase
-
-    # Extract the first two characters and third character from user input
-    first_two_chars = user_input[:2]
-    third_char = user_input[2]
-
-    # Create the final password by prepending and appending the symbols
-    final_password = first_two_chars + base34_password + modified_base34 + third_char
-
-    return final_password
-
 # Example usage
-user_input = input("Please enter 3 unique characters. For added security, try to include at least one uppercase letter and a symbol in the first three characters: ")
-password = generate_password(user_input)
-print("Generated Password:", password)
+if __name__ == "__main__":
+    print("Welcome to the Secure Password Generator!")
+    print("Here's how it works:")
+    print(ascii_art)
+
+    user_input = input("Please enter a phrase to enhance password security: ")
+    password = generate_password(user_input)
+    print("Generated Password:", password)
