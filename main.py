@@ -1,15 +1,14 @@
-import random
-import os
+import secrets
 
-# Extended character set to include symbols for the final password
-extended_charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?{}[]|'
+# Extended character set with more symbols for entropy
+extended_charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=<>?{}[]|:;,.~`'
 
 # Function to generate a random large Fibonacci number with 'n_digits' digits
 def generate_large_fibonacci(n_digits):
-    a, b = random.randint(10**(n_digits - 1), 10**n_digits), random.randint(10**(n_digits - 1), 10**n_digits)
+    a, b = secrets.randbelow(10**(n_digits - 1)), secrets.randbelow(10**n_digits)
     fib_sequence = [a, b]
 
-    while len(str(fib_sequence[-1])) < n_digits:  # Keep generating until we get a Fibonacci number with enough digits
+    while len(str(fib_sequence[-1])) < n_digits:
         a, b = b, a + b
         fib_sequence.append(b)
 
@@ -26,7 +25,7 @@ def to_extended_charset(n):
     return ''.join(digits[::-1])
 
 # Function to generate a password based on random Fibonacci numbers and user input
-def generate_password(user_input, password_length=16, num_fib_numbers=100, fib_digit_length=100):
+def generate_password(user_input, password_length=32, num_fib_numbers=100, fib_digit_length=200):
     # Generate random Fibonacci numbers
     fib_numbers = [generate_large_fibonacci(fib_digit_length) for _ in range(num_fib_numbers)]
 
@@ -36,13 +35,16 @@ def generate_password(user_input, password_length=16, num_fib_numbers=100, fib_d
     # Start generating the password by iterating over the Fibonacci numbers and user input values
     password_parts = []
 
+    # Generate a random 16-byte salt for additional entropy
+    salt = secrets.token_bytes(16)
+
     for i in range(password_length // 4):  # Generate multiple parts of the password
         # Select a random Fibonacci number and a part of the user input
-        selected_fib = random.choice(fib_numbers)
+        selected_fib = secrets.choice(fib_numbers)
         input_part = input_values[i % len(input_values)]  # Wrap around if user input is shorter than password length
 
-        # Combine the selected Fibonacci number with the input part using bitwise XOR
-        combined_result = selected_fib ^ input_part
+        # Combine the selected Fibonacci number with the input part using XOR
+        combined_result = (selected_fib ^ input_part) ^ int.from_bytes(salt, 'big')
 
         # Apply bitwise shifting to add complexity
         shifted_result = combined_result << 5  # Left shift for added complexity
