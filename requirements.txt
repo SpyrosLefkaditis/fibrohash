@@ -1,0 +1,21 @@
+# FibroHash Password Generator - Requirements
+# 
+# This project uses only Python standard library modules for maximum compatibility
+# and security. No external dependencies are required.
+#
+# Python version requirement: 3.7+
+# 
+# Standard library modules used:
+# - secrets (cryptographically secure random numbers)
+# - hashlib (cryptographic hash functions)
+# - hmac (HMAC implementation)
+# - json (configuration file handling)
+# - logging (security logging)
+# - time (performance measurement)
+# - collections (data analysis)
+# - re (input validation)
+# - os, pathlib (file system operations)
+# - typing (type hints)
+# - statistics (test analysis)
+#
+# No pip install required - all dependencies included with Python!
