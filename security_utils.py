@@ -108,14 +108,16 @@ class SecurityAuditor:
         for count in char_counts.values():
             probability = count / password_length
             if probability > 0:
-                shannon_entropy -= probability * (probability.bit_length() - 1)
+                import math
+                shannon_entropy -= probability * math.log2(probability)
         
         # Theoretical entropy (assuming uniform distribution)
         charset_size = len(set(password))
-        theoretical_entropy = password_length * (charset_size.bit_length() - 1) if charset_size > 1 else 0
+        import math
+        theoretical_entropy = password_length * math.log2(charset_size) if charset_size > 1 else 0
         
         # Normalized entropy (0-1 scale)
-        max_possible_entropy = password_length * (256.bit_length() - 1)  # Assuming 256 possible characters
+        max_possible_entropy = password_length * ((256).bit_length() - 1)  # Assuming 256 possible characters
         normalized_entropy = shannon_entropy / max_possible_entropy if max_possible_entropy > 0 else 0
         
         return {
