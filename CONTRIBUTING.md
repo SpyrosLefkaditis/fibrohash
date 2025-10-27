@@ -37,22 +37,47 @@ Security is paramount for FibroHash. When contributing security-related changes:
 
 ## Development Process
 
+### Quick Start for Contributors
+
+```bash
+# Get started immediately
+git clone https://github.com/SpyrosLefkaditis/fibrohash.git
+cd fibrohash
+./init.sh --version  # Verify setup
+./init.sh --test     # Run test suite
+```
+
 ### Setting Up Development Environment
 
 ```bash
+# Clone the repository
 git clone https://github.com/SpyrosLefkaditis/fibrohash.git
 cd fibrohash
-python3 -m pip install -e .[dev]
+
+# Quick setup using the initialization script
+./init.sh
+
+# Or manual setup
+python3 -m pip install -e .
+
+# Verify installation
+python3 -c "from main import generate_password; print('Development environment ready!')"
 ```
 
 ### Running Tests
 
 ```bash
-# Run all tests
+# Run all tests using the init script
+./init.sh --test
+
+# Or run tests directly
 python3 test.py
 
-# Run security audit
-python3 -c "from security_utils import generate_security_report; print('Security tests passed')"
+# Run security audit and generate report
+python3 -c "from main import generate_password; from security_utils import generate_security_report; pwd = generate_password('test', 32, 'high'); report = generate_security_report(pwd); print('Security tests passed!')"
+
+# Test configuration management
+python3 -c "from config import get_config; config = get_config(); print(f'Config loaded: {config.get_security_param(\"default_security_level\")}')"
 ```
 
 ### Code Style
