@@ -1,127 +1,139 @@
 
 
 
-# FibroHash - Enterprise-Grade Secure Password Generator
+# FibroHash: Cryptographically Secure Password Generation Framework
 
-`FibroHash` is a cryptographically secure password generator that combines advanced mathematical concepts with modern security practices. It uses cryptographic Fibonacci-based algorithms, PBKDF2 key derivation, and multiple entropy sources to generate highly secure, unpredictable passwords suitable for enterprise environments.
+[![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Security Audit](https://img.shields.io/badge/security-audited-green.svg)](https://github.com/SpyrosLefkaditis/fibrohash)
+[![JOSS Status](https://img.shields.io/badge/JOSS-under%20review-orange.svg)](https://joss.theoj.org/)
 
-## 🔐 Security Features
+FibroHash is a research-focused, cryptographically secure password generation framework designed for system administrators and security professionals. It implements a novel multi-layered approach combining PBKDF2 key derivation, HMAC-based entropy generation, and Fibonacci-inspired algorithms to produce passwords with guaranteed entropy levels exceeding 190 bits.
 
-- **Cryptographic Security**: Uses `secrets` module for cryptographically secure random number generation
-- **PBKDF2 Key Derivation**: Industry-standard key derivation with configurable iterations
-- **Multiple Entropy Sources**: Combines user input, cryptographic salts, and Fibonacci-based algorithms
-- **Input Validation**: Comprehensive sanitization and validation of all inputs
-- **Timing Attack Resistance**: Constant-time operations where possible
-- **Character Diversity Enforcement**: Ensures passwords meet complexity requirements
-- **Configurable Security Levels**: Standard, High, and Maximum security modes
-- **Security Auditing**: Built-in password quality analysis and compliance checking
+## Research Applications
 
-## 🔬 How It Works
+- **System Administration**: Secure password generation for enterprise environments
+- **Security Research**: Reproducible password security analysis and entropy validation
+- **Compliance Auditing**: Automated validation against NIST, PCI DSS, and ISO standards
+- **Cryptographic Education**: Teaching modern password security and entropy analysis
 
-FibroHash employs a multi-layered security approach:
+## Key Features
 
-1. **Input Processing**: User input is validated, sanitized, and processed through PBKDF2 with cryptographic salt
-2. **Cryptographic Fibonacci Generation**: Creates large numbers using HMAC-SHA256 in a Fibonacci-inspired pattern
-3. **Multi-Round Generation**: Generates password segments through multiple cryptographic rounds
-4. **Entropy Mixing**: Combines multiple entropy sources using secure cryptographic operations
-5. **Character Encoding**: Maps numeric values to characters using a secure base conversion system
-6. **Quality Assurance**: Validates output for character diversity and security compliance
+- **🔐 Cryptographic Security**: PBKDF2-HMAC-SHA256 with 1,000-10,000 configurable iterations
+- **📊 Entropy Analysis**: Built-in Shannon entropy calculation and character distribution analysis
+- **✅ Standards Compliance**: NIST SP 800-63B, PCI DSS, ISO/IEC 27001 validation
+- **🔬 Research Tools**: Comprehensive security auditing and reproducible testing framework
+- **📱 Zero Dependencies**: Uses only Python standard library for maximum security
+- **🌐 Offline Operation**: No network communication or external service dependencies
 
-### Security Architecture
+## Cryptographic Methodology
+
+FibroHash implements a novel multi-stage cryptographic pipeline:
 
 ```
-User Input → Input Validation → PBKDF2 + Salt → Multi-Round Generation
-                                                         ↓
-Password ← Character Encoding ← Entropy Mixing ← Crypto-Fibonacci
+User Input → Validation → PBKDF2-HMAC-SHA256 → Multi-Round Generation
+                                                        ↓
+Secure Password ← Character Encoding ← Entropy Mixing ← HMAC-Fibonacci
 ```
 
-## 📋 System Requirements
+### Core Algorithm
 
-- **Python**: 3.7 or higher
-- **Dependencies**: Standard library only (no external dependencies)
-- **Platforms**: Cross-platform (Windows, macOS, Linux)
-- **Memory**: Minimal footprint (~1MB)
-- **Performance**: Optimized for security over speed
+1. **Input Sanitization**: Validates and sanitizes user input to prevent injection attacks
+2. **Key Derivation**: PBKDF2-HMAC-SHA256 with configurable iterations (1K-10K)
+3. **Entropy Generation**: HMAC-based Fibonacci sequence generation with cryptographic salts
+4. **Multi-Round Processing**: Multiple generation rounds with independent entropy sources
+5. **Quality Assurance**: Automated validation of entropy levels and character diversity
 
-## 🚀 Installation & Quick Start
+### Security Properties
 
-### Prerequisites
+- **Theoretical Entropy**: 192+ bits for 32-character passwords
+- **Salt Uniqueness**: Cryptographically secure salt for each generation
+- **Timing Attack Resistance**: Consistent operation times regardless of input
+- **Pattern Avoidance**: Detection and mitigation of predictable sequences
 
-Ensure you have Python 3.7+ installed on your system:
+## Requirements
+
+- **Python**: 3.7+ (uses standard library only)
+- **Platform**: Cross-platform (Linux, macOS, Windows)
+- **Dependencies**: None (zero external dependencies for security)
+- **Memory**: <5MB footprint
+
+## Installation
+
+### Quick Setup
 
 ```bash
-python --version  # Should be 3.7 or higher
+git clone https://github.com/SpyrosLefkaditis/fibrohash.git
+cd fibrohash
+python3 setup.py install  # or pip install -e .
 ```
 
-### Installation
+### Development Installation
 
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/SpyrosLefkaditis/fibrohash.git
-   cd fibrohash
-   ```
-
-2. **Set up configuration** (optional):
-   ```bash
-   python config.py  # Creates default configuration file
-   ```
-
-3. **Run FibroHash**:
-
-   **Linux/macOS**:
-   ```bash
-   chmod +x init.sh
-   ./init.sh
-   ```
-
-   **Windows**:
-   ```cmd
-   python main.py
-   ```
-
-   **Direct Python execution**:
-   ```bash
-   python3 main.py
-   ```
-
-### Quick Usage Examples
-
-**Interactive Mode**:
 ```bash
-python main.py
-# Follow the prompts to generate a secure password
+git clone https://github.com/SpyrosLefkaditis/fibrohash.git
+cd fibrohash
+python3 -m pip install -e .
 ```
 
-**Programmatic Usage**:
+## Usage
+
+### Command Line Interface
+
+```bash
+# Interactive mode
+python3 -m fibrohash
+
+# Direct generation
+python3 -c "from main import generate_password; print(generate_password('research phrase'))"
+```
+
+### Programmatic API
+
 ```python
 from main import generate_password
+from security_utils import generate_security_report
 
-# Generate with defaults (32 chars, high security)
-password = generate_password("my secure phrase")
+# Basic password generation
+password = generate_password("secure research phrase", 32, "maximum")
 
-# Generate with custom parameters
-password = generate_password("my phrase", password_length=16, security_level="maximum")
+# Security analysis
+report = generate_security_report(password)
+print(f"Entropy: {report['audit_results']['entropy_analysis']['theoretical_entropy']} bits")
+```
+
+### Research Applications
+
+```python
+from security_utils import SecurityAuditor
+
+# Comprehensive entropy analysis
+auditor = SecurityAuditor()
+results = auditor.audit_password_quality(password)
+
+# Character distribution analysis
+char_analysis = results['character_analysis']
+print(f"Character diversity: {char_analysis['diversity_score']}/100")
 ```
 
 
 
 
-## 🔧 Configuration
+## Configuration
 
-FibroHash supports extensive configuration through `fibrohash_config.json`:
+FibroHash uses `fibrohash_config.json` for security parameter configuration:
 
 ```json
 {
   "security": {
     "min_password_length": 8,
     "max_password_length": 128,
-    "default_password_length": 32,
     "default_security_level": "high"
   },
   "cryptography": {
     "pbkdf2_iterations": {
       "standard": 1000,
-      "high": 5000,
+      "high": 5000,  
       "maximum": 10000
     }
   }
@@ -130,40 +142,48 @@ FibroHash supports extensive configuration through `fibrohash_config.json`:
 
 ### Security Levels
 
-| Level | PBKDF2 Iterations | Key Size | Rounds | Use Case |
-|-------|------------------|----------|---------|----------|
-| **Standard** | 1,000 | 32 bytes | 3 | General use |
-| **High** | 5,000 | 64 bytes | 5 | Business/Personal |
-| **Maximum** | 10,000 | 128 bytes | 10 | High-security environments |
+| Level | PBKDF2 Iterations | Key Size | Entropy | Research Use |
+|-------|------------------|----------|---------|--------------|
+| Standard | 1,000 | 32 bytes | 190+ bits | Educational/Testing |
+| High | 5,000 | 64 bytes | 192+ bits | Research/Production |
+| Maximum | 10,000 | 128 bytes | 195+ bits | High-security Research |
 
-## 🧪 Testing & Validation
+## Testing & Validation
 
-### Comprehensive Security Testing
-
-Run the enhanced security test suite:
+### Automated Testing
 
 ```bash
-python test.py
+# Run comprehensive security test suite
+python3 test.py
+
+# Run specific entropy validation
+python3 -c "from test import test_security_levels; test_security_levels()"
 ```
 
-This performs:
-- **Entropy Analysis**: Shannon entropy, theoretical entropy calculations
-- **Character Distribution**: Diversity and pattern analysis
-- **Uniqueness Testing**: Collision detection across multiple generations
-- **Timing Attack Resistance**: Performance consistency analysis
-- **Edge Case Testing**: Input validation and error handling
-- **Compliance Checking**: NIST, PCI-DSS, ISO27001 standards
-
-### Security Audit Tools
-
-Generate detailed security reports:
+### Security Analysis
 
 ```python
-from security_utils import generate_security_report
+from security_utils import SecurityAuditor, generate_security_report
 
-# Analyze any password
-report = generate_security_report("YourPasswordHere")
-print(f"Security Score: {report['audit_results']['security_score']}/100")
+# Comprehensive password analysis
+auditor = SecurityAuditor()
+report = auditor.audit_password_quality(password)
+
+# Generate research-ready security report
+full_report = generate_security_report(password)
+```
+
+### Reproducible Research
+
+FibroHash includes tools for reproducible security research:
+
+```python
+# Entropy analysis for research
+from test import calculate_theoretical_entropy, calculate_actual_entropy
+
+theoretical = calculate_theoretical_entropy(password)
+actual = calculate_actual_entropy(password)
+print(f"Theoretical: {theoretical:.2f} bits, Actual: {actual:.2f} bits")
 ```
 
 ## 📊 Example Output & Analysis
@@ -194,109 +214,117 @@ Analysis:
 ✅ Timing attack mitigation
 ```
 
-## 🛡️ Security Best Practices
+## Security Considerations
 
-### For Users
-- **Use unique input phrases** for different services
-- **Store generated passwords securely** (password manager recommended)
-- **Don't share passwords** via unsecured channels
-- **Regenerate passwords periodically** for high-security accounts
-- **Use maximum security level** for critical systems
+### Cryptographic Properties
 
-### For Developers
-- **Review security configuration** before deployment
-- **Monitor for security updates** to dependencies
-- **Implement proper logging** for security events
-- **Test with your security requirements** using provided tools
-- **Consider hardware security modules** for enterprise deployments
+- **Entropy**: 192+ bits theoretical entropy for 32-character passwords
+- **Salt**: Unique cryptographic salt for each password generation
+- **Key Derivation**: PBKDF2-HMAC-SHA256 with configurable iterations
+- **Timing Attacks**: Consistent operation times regardless of input
 
-### Input Recommendations
-- **Length**: 8+ characters provide better entropy mixing
-- **Complexity**: Mix of letters, numbers, symbols in input
-- **Uniqueness**: Use different phrases for different passwords
-- **Avoid**: Personal information, dictionary words, patterns
+### Best Practices
 
-## 🔍 Security Audit & Compliance
+- Use unique input phrases for different applications
+- Store generated passwords in secure password managers
+- Validate entropy levels using provided analysis tools
+- Regular security audits using built-in compliance checking
 
-### Standards Compliance
-- ✅ **NIST SP 800-63B**: Password composition guidelines
-- ✅ **PCI DSS**: Payment card industry requirements
-- ✅ **ISO/IEC 27001**: Information security management
-- ✅ **OWASP**: Web application security best practices
+### Research Applications
 
-### Regular Security Testing
-```bash
-# Run comprehensive security test suite
-python test.py
+- Reproducible password security analysis
+- Entropy distribution studies
+- Cryptographic algorithm validation
+- Security compliance verification
 
-# Generate security audit report
-python -c "from security_utils import generate_security_report; generate_security_report('test_password')"
+## Standards Compliance
 
-# Test with custom configuration
-python config.py  # Creates/updates config file
+FibroHash implements and validates against:
+
+- **NIST SP 800-63B**: Digital identity guidelines for authentication
+- **PCI DSS**: Payment card industry data security standards  
+- **ISO/IEC 27001**: Information security management systems
+- **OWASP**: Open Web Application Security Project guidelines
+
+### Automated Compliance Validation
+
+```python
+from security_utils import SecurePasswordValidator
+
+validator = SecurePasswordValidator()
+is_compliant, violations = validator.validate(password)
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 fibrohash/
-├── main.py              # Core password generation engine
-├── config.py            # Configuration management system
-├── security_utils.py    # Security auditing and validation tools
-├── test.py             # Comprehensive security test suite
-├── init.sh             # Linux/macOS launcher script
-├── fibrohash_config.json # Configuration file (auto-generated)
-├── README.md           # This documentation
-└── LICENSE             # MIT license
+├── main.py                    # Core password generation engine
+├── config.py                  # Configuration management
+├── security_utils.py          # Security analysis and validation
+├── test.py                   # Comprehensive test suite
+├── setup.py                  # Package configuration
+├── paper.md                  # JOSS research paper
+├── paper.bib                 # Bibliography
+├── CONTRIBUTING.md           # Contribution guidelines
+├── docs/                     # Documentation directory
+├── .github/workflows/        # CI/CD configuration
+└── fibrohash_config.json    # Security configuration
 ```
 
-## 🚨 Security Considerations
+## Contributing
 
-### What FibroHash Does NOT Do
-- **Store passwords**: All generation is stateless
-- **Network communication**: Fully offline operation
-- **Log sensitive data**: Input phrases are not logged
-- **Guarantee uniqueness**: Use different inputs for different passwords
+We welcome contributions from the research community! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
 
-### Threat Model
-FibroHash is designed to resist:
-- 🔐 **Brute force attacks**: High entropy output
-- ⚡ **Timing attacks**: Consistent operation times
-- 🎯 **Pattern analysis**: Cryptographic randomness
-- 📊 **Statistical analysis**: Multiple entropy sources
-- 🔍 **Input prediction**: PBKDF2 with salt
+### Development Setup
 
-## 🤝 Contributing
+```bash
+git clone https://github.com/SpyrosLefkaditis/fibrohash.git
+cd fibrohash
+python3 -m pip install -e .[dev]
+```
 
-We welcome security-focused contributions:
+### Running Tests
 
-1. **Security reviews** and vulnerability reports
-2. **Performance optimizations** maintaining security
-3. **Compliance enhancements** for additional standards
-4. **Documentation improvements**
-5. **Test coverage expansion**
+```bash
+python3 test.py  # Security test suite
+python3 -m pytest  # Unit tests (when available)
+```
 
-### Reporting Security Issues
-For security vulnerabilities, please:
-1. **Do not** create public issues
-2. **Email directly** to maintainers
-3. **Provide details** for reproduction
-4. **Allow time** for coordinated disclosure
+## Citation
 
-## 📄 License
+If you use FibroHash in your research, please cite:
+
+```bibtex
+@article{lefkaditis2025fibrohash,
+  title={FibroHash: A Cryptographically Secure Password Generation Framework for System Administration},
+  author={Lefkaditis, Spyros},
+  journal={Journal of Open Source Software},
+  year={2025},
+  note={Under review}
+}
+```
+
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
-- **Python Cryptography Community** for security best practices
-- **NIST** for password security guidelines
-- **OWASP** for application security standards
-- **Security researchers** who review and improve this tool
+- Python Cryptography Community for establishing security best practices
+- NIST Cybersecurity Framework for security standards guidance
+- Open source security researchers and contributors
+
+## Support
+
+- **Documentation**: See [docs/](docs/) directory
+- **Issues**: [GitHub Issues](https://github.com/SpyrosLefkaditis/fibrohash/issues)
+- **Security Issues**: Please report privately to maintainers
+- **Research Collaboration**: Contact via GitHub or paper citations
 
 ---
 
-**⚠️ Security Notice**: While FibroHash implements current security best practices, no password generator is 100% secure. Use in conjunction with other security measures and keep software updated.
+**Disclaimer**: FibroHash implements current cryptographic best practices. Users should evaluate security requirements and keep software updated. No cryptographic system provides absolute security.
 
 
 

@@ -1,0 +1,97 @@
+name: Security Tests
+
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  security-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.7, 3.8, 3.9, '3.10', 3.11]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .[dev]
+    
+    - name: Run security tests
+      run: |
+        python test.py
+    
+    - name: Run entropy analysis
+      run: |
+        python -c "
+        from main import generate_password
+        from security_utils import generate_security_report
+        password = generate_password('ci test phrase', 32, 'maximum')
+        report = generate_security_report(password, save_to_file=False)
+        entropy = report['audit_results']['entropy_analysis']['theoretical_entropy']
+        score = report['audit_results']['security_score']
+        print(f'Entropy: {entropy} bits, Security Score: {score}/100')
+        assert entropy > 190, f'Entropy too low: {entropy}'
+        assert score > 90, f'Security score too low: {score}'
+        print('Security validation passed!')
+        "
+    
+    - name: Test configuration system
+      run: |
+        python config.py
+        python -c "from config import get_config; config = get_config(); print('Configuration system working')"
+    
+    - name: Validate compliance
+      run: |
+        python -c "
+        from main import generate_password
+        from security_utils import SecurePasswordValidator
+        validator = SecurePasswordValidator()
+        password = generate_password('compliance test', 16, 'high')
+        is_valid, violations = validator.validate(password)
+        print(f'Password valid: {is_valid}')
+        if violations:
+            print(f'Violations: {violations}')
+        assert len(violations) == 0, f'Compliance violations: {violations}'
+        print('Compliance validation passed!')
+        "
+
+  code-quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.10'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 black mypy
+    
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    
+    - name: Check formatting with black
+      run: |
+        black --check --diff .
+    
+    - name: Type check with mypy
+      run: |
+        mypy main.py config.py security_utils.py --ignore-missing-imports
