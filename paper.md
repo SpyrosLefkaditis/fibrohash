@@ -24,15 +24,15 @@ bibliography: paper.bib
 
 FibroHash is an enterprise-grade, cryptographically secure password generation framework designed specifically for system administrators and security professionals. Unlike traditional password generators that rely on simple randomization, FibroHash implements a novel multi-layered cryptographic approach combining PBKDF2 key derivation, HMAC-based entropy generation, and Fibonacci-inspired algorithmic patterns to produce passwords with guaranteed entropy levels exceeding 190 bits.
 
-The framework addresses critical security gaps in existing password generation tools by implementing proper cryptographic salt handling, resistance to timing attacks, and compliance with modern security standards including NIST SP 800-63B, PCI DSS, and ISO/IEC 27001. FibroHash operates entirely offline using only Python's standard library, ensuring no external dependencies or network communications that could compromise security.
+The framework addresses critical security gaps in existing password generation tools by implementing proper cryptographic salt handling, resistance to timing attacks, and compliance with modern security standards including NIST SP 800-63B [@nist2017digital], PCI DSS, and ISO/IEC 27001. FibroHash operates entirely offline using only Python's standard library, ensuring no external dependencies or network communications that could compromise security.
 
 # Statement of need
 
-System administrators and security professionals require password generation tools that provide both high entropy and reproducible security analysis. Existing solutions often suffer from predictable patterns [@wheeler2005secure], insufficient entropy [@bonneau2012quest], or lack proper cryptographic foundations [@florencio2007large]. Many tools also require external dependencies or network connectivity, introducing potential security vulnerabilities [@gaw2006password].
+System administrators and security professionals require password generation tools that provide both high entropy and reproducible security analysis. Existing solutions often suffer from predictable patterns, insufficient entropy, or lack proper cryptographic foundations. Recent research on password behavior through persuasion techniques [@paudel2024priming] demonstrates the importance of user-centered approaches to secure password creation. Many tools also require external dependencies or network connectivity, introducing potential security vulnerabilities, while contemporary studies on password manager adoption [@tian2025unraveling] reveal ongoing challenges in organizational credential management practices. Recent analysis of password hashing methods using CSPRNG and PBKDF2 [@mustafa2024analysis] demonstrates the critical importance of implementing proper cryptographic foundations in password generation tools.
 
 FibroHash addresses these limitations by providing:
 
-1. **Cryptographic Security**: Implementation of PBKDF2-HMAC-SHA256 with configurable iterations (1,000-10,000) ensuring resistance to rainbow table and brute-force attacks
+1. **Cryptographic Security**: Implementation of PBKDF2-HMAC-SHA256 with configurable iterations (1,000-10,000) following NIST SP 800-63B guidelines [@nist2017digital] ensuring resistance to rainbow table and brute-force attacks
 2. **Entropy Verification**: Built-in entropy analysis tools providing Shannon entropy calculations and character distribution analysis
 3. **Compliance Framework**: Automated validation against industry security standards with detailed audit reporting
 4. **Research Reproducibility**: Comprehensive test suite enabling security researchers to validate and extend the cryptographic methodology
@@ -41,7 +41,7 @@ The framework has been designed with system administrators in mind, providing bo
 
 # Research Contribution and Methodology
 
-FibroHash introduces a novel approach to password generation that combines mathematical sequence generation with modern cryptographic primitives. The core innovation lies in the use of HMAC-based Fibonacci-inspired number generation, which provides the benefits of mathematical predictability for testing while maintaining cryptographic security through proper key derivation.
+FibroHash introduces an approach to password generation that combines mathematical sequence generation with modern cryptographic primitives [@nist2017digital]. The key contribution lies in the use of HMAC-based Fibonacci-inspired number generation, which provides the benefits of mathematical predictability for testing while maintaining cryptographic security through proper PBKDF2 key derivation.
 
 ## Cryptographic Architecture
 
