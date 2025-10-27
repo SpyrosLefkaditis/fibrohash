@@ -8,7 +8,7 @@
 [![Security Audit](https://img.shields.io/badge/security-audited-green.svg)](https://github.com/SpyrosLefkaditis/fibrohash)
 [![JOSS Status](https://img.shields.io/badge/JOSS-under%20review-orange.svg)](https://joss.theoj.org/)
 
-FibroHash is a research-focused, cryptographically secure password generation framework designed for system administrators and security professionals. It implements a novel multi-layered approach combining PBKDF2 key derivation, HMAC-based entropy generation, and Fibonacci-inspired algorithms to produce passwords with guaranteed entropy levels exceeding 190 bits.
+FibroHash is a research-focused, cryptographically secure password generation framework designed for system administrators and security professionals. It implements a novel multi-layered cryptographic approach combining PBKDF2 key derivation, HMAC-based entropy generation, and mathematical sequence algorithms to produce passwords with guaranteed entropy levels exceeding 190 bits.
 
 ## Research Applications
 
@@ -33,14 +33,14 @@ FibroHash implements a novel multi-stage cryptographic pipeline:
 ```
 User Input → Validation → PBKDF2-HMAC-SHA256 → Multi-Round Generation
                                                         ↓
-Secure Password ← Character Encoding ← Entropy Mixing ← HMAC-Fibonacci
+Secure Password ← Character Encoding ← Entropy Mixing ← HMAC-Based Generation
 ```
 
 ### Core Algorithm
 
 1. **Input Sanitization**: Validates and sanitizes user input to prevent injection attacks
 2. **Key Derivation**: PBKDF2-HMAC-SHA256 with configurable iterations (1K-10K)
-3. **Entropy Generation**: HMAC-based Fibonacci sequence generation with cryptographic salts
+3. **Entropy Generation**: HMAC-based mathematical sequence generation with cryptographic salts
 4. **Multi-Round Processing**: Multiple generation rounds with independent entropy sources
 5. **Quality Assurance**: Automated validation of entropy levels and character diversity
 
@@ -60,32 +60,78 @@ Secure Password ← Character Encoding ← Entropy Mixing ← HMAC-Fibonacci
 
 ## Installation
 
-### Quick Setup
+### Quick Start (Recommended)
 
 ```bash
+# Clone the repository
 git clone https://github.com/SpyrosLefkaditis/fibrohash.git
 cd fibrohash
-python3 setup.py install  # or pip install -e .
+
+# Run the initialization script (includes setup and configuration)
+./init.sh
 ```
 
-### Development Installation
+### Manual Installation
 
 ```bash
+# Clone the repository
 git clone https://github.com/SpyrosLefkaditis/fibrohash.git
 cd fibrohash
+
+# Install using pip (editable/development mode)
 python3 -m pip install -e .
+
+# Or using setup.py
+python3 setup.py install
+```
+
+### Requirements
+
+- **Python 3.7+** (uses standard library only)
+- **No external dependencies** (zero pip requirements for maximum security)
+- **Platform**: Cross-platform (Linux, macOS, Windows)
+- **Memory**: <5MB footprint
+- **Storage**: ~2MB for complete installation
+
+### Verification
+
+```bash
+# Test the installation
+python3 test.py
+
+# Quick functionality check
+python3 -c "from main import generate_password; print('Installation successful!')"
 ```
 
 ## Usage
 
+### Quick Start Script
+
+```bash
+# Interactive password generation with guided setup
+./init.sh
+
+# The init.sh script provides:
+# - Interactive password generation
+# - Security level selection
+# - Configuration validation
+# - Usage examples and help
+```
+
 ### Command Line Interface
 
 ```bash
-# Interactive mode
+# Interactive mode (if available)
 python3 -m fibrohash
 
-# Direct generation
+# Direct generation - basic usage
 python3 -c "from main import generate_password; print(generate_password('research phrase'))"
+
+# Direct generation - with parameters
+python3 -c "from main import generate_password; print(generate_password('secure phrase', 32, 'maximum'))"
+
+# Using the test/demo script
+python3 test.py  # Includes examples and security validation
 ```
 
 ### Programmatic API
@@ -93,27 +139,82 @@ python3 -c "from main import generate_password; print(generate_password('researc
 ```python
 from main import generate_password
 from security_utils import generate_security_report
+from config import update_security_level
 
 # Basic password generation
 password = generate_password("secure research phrase", 32, "maximum")
 
-# Security analysis
+# Generate with custom configuration
+update_security_level("maximum")
+password = generate_password("enterprise phrase", 48, "maximum")
+
+# Security analysis and reporting
 report = generate_security_report(password)
 print(f"Entropy: {report['audit_results']['entropy_analysis']['theoretical_entropy']} bits")
+print(f"Security Score: {report['audit_results']['security_score']}/100")
+```
+
+### Advanced Usage Examples
+
+```python
+from security_utils import SecurityAuditor, SecurePasswordValidator
+from main import generate_password
+
+# Batch password generation with analysis
+passwords = []
+for i in range(10):
+    pwd = generate_password(f"batch-phrase-{i}", 32, "high")
+    passwords.append(pwd)
+
+# Comprehensive security audit
+auditor = SecurityAuditor()
+validator = SecurePasswordValidator()
+
+for pwd in passwords:
+    # Security audit
+    audit_results = auditor.audit_password_quality(pwd)
+    
+    # Compliance validation  
+    is_valid, violations = validator.validate(pwd)
+    
+    print(f"Password: {pwd[:8]}... | Entropy: {audit_results['entropy_analysis']['theoretical_entropy']:.1f} bits | Valid: {is_valid}")
 ```
 
 ### Research Applications
 
 ```python
 from security_utils import SecurityAuditor
+from test import calculate_theoretical_entropy, calculate_actual_entropy
 
-# Comprehensive entropy analysis
+# Comprehensive entropy analysis for research
 auditor = SecurityAuditor()
 results = auditor.audit_password_quality(password)
 
 # Character distribution analysis
 char_analysis = results['character_analysis']
 print(f"Character diversity: {char_analysis['diversity_score']}/100")
+
+# Theoretical vs actual entropy comparison
+theoretical = calculate_theoretical_entropy(password)
+actual = calculate_actual_entropy(password)
+print(f"Theoretical: {theoretical:.2f} bits, Actual: {actual:.2f} bits")
+```
+
+### Script-Based Usage
+
+```bash
+# Run the initialization script for guided usage
+./init.sh
+
+# Available options in init.sh:
+# 1. Interactive password generation
+# 2. Batch generation
+# 3. Security analysis
+# 4. Configuration management
+# 5. Help and examples
+
+# Direct execution with parameters
+python3 main.py --phrase "secure phrase" --length 32 --level maximum
 ```
 
 
@@ -121,23 +222,67 @@ print(f"Character diversity: {char_analysis['diversity_score']}/100")
 
 ## Configuration
 
-FibroHash uses `fibrohash_config.json` for security parameter configuration:
+### Configuration Files
+
+FibroHash provides multiple configuration options:
+
+#### 1. JSON Configuration (`fibrohash_config.json`)
 
 ```json
 {
   "security": {
     "min_password_length": 8,
     "max_password_length": 128,
-    "default_security_level": "high"
+    "default_security_level": "high",
+    "enforce_character_diversity": true,
+    "min_entropy_threshold": 190
   },
   "cryptography": {
     "pbkdf2_iterations": {
       "standard": 1000,
       "high": 5000,  
       "maximum": 10000
-    }
+    },
+    "salt_length": 32,
+    "key_length": 64
+  },
+  "output": {
+    "include_entropy_analysis": true,
+    "show_security_score": true,
+    "verbose_logging": false
   }
 }
+```
+
+#### 2. Python Configuration (`config.py`)
+
+```python
+# Modify config.py to adjust runtime parameters
+from config import update_security_level, get_configuration
+
+# Programmatically update configuration
+update_security_level("maximum")
+current_config = get_configuration()
+
+# Custom configuration for specific use cases
+config = {
+    "pbkdf2_iterations": 15000,  # Custom high-security setting
+    "password_length": 48,       # Extended length
+    "security_level": "custom"
+}
+```
+
+### Configuration Management
+
+```bash
+# View current configuration
+python3 -c "from config import get_configuration; print(get_configuration())"
+
+# Validate configuration
+python3 -c "from config import validate_config; validate_config()"
+
+# Reset to defaults
+python3 -c "from config import reset_to_defaults; reset_to_defaults()"
 ```
 
 ### Security Levels

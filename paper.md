@@ -22,7 +22,7 @@ bibliography: paper.bib
 
 # Summary
 
-FibroHash is an enterprise-grade, cryptographically secure password generation framework designed specifically for system administrators and security professionals. Unlike traditional password generators that rely on simple randomization, FibroHash implements a novel multi-layered cryptographic approach combining PBKDF2 key derivation, HMAC-based entropy generation, and Fibonacci-inspired algorithmic patterns to produce passwords with guaranteed entropy levels exceeding 190 bits.
+FibroHash is an enterprise-grade, cryptographically secure password generation framework designed specifically for system administrators and security professionals. Unlike traditional password generators that rely on simple randomization, FibroHash implements a novel multi-layered cryptographic approach combining PBKDF2 key derivation, HMAC-based entropy generation, and mathematical sequence algorithms to produce passwords with guaranteed entropy levels exceeding 190 bits.
 
 The framework addresses critical security gaps in existing password generation tools by implementing proper cryptographic salt handling, resistance to timing attacks, and compliance with modern security standards including NIST SP 800-63B [@nist2017digital], PCI DSS, and ISO/IEC 27001. FibroHash operates entirely offline using only Python's standard library, ensuring no external dependencies or network communications that could compromise security.
 
@@ -41,7 +41,7 @@ The framework has been designed with system administrators in mind, providing bo
 
 # Research Contribution and Methodology
 
-FibroHash introduces an approach to password generation that combines mathematical sequence generation with modern cryptographic primitives [@nist2017digital]. The key contribution lies in the use of HMAC-based Fibonacci-inspired number generation, which provides the benefits of mathematical predictability for testing while maintaining cryptographic security through proper PBKDF2 key derivation.
+FibroHash introduces an approach to password generation that combines mathematical sequence generation with modern cryptographic primitives [@nist2017digital]. The key contribution lies in the use of HMAC-based mathematical sequence generation, which provides the benefits of deterministic testing capabilities while maintaining cryptographic security through proper PBKDF2 key derivation.
 
 ## Cryptographic Architecture
 
