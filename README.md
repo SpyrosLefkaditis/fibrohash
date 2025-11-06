@@ -69,7 +69,10 @@ Secure Password ← Character Encoding ← Entropy Mixing ← HMAC-Based Generat
 git clone https://github.com/SpyrosLefkaditis/fibrohash.git
 cd fibrohash
 
-# Run the initialization script (includes setup and configuration)
+# Run the setup script
+./setup.sh
+
+# Launch interactive password generator
 ./init.sh
 ```
 
@@ -80,11 +83,14 @@ cd fibrohash
 git clone https://github.com/SpyrosLefkaditis/fibrohash.git
 cd fibrohash
 
-# Install using pip (editable/development mode)
-python3 -m pip install -e .
+# Make scripts executable
+chmod +x setup.sh init.sh
 
-# Or using setup.py
-python3 setup.py install
+# Run setup and configuration
+./setup.sh
+
+# Run comprehensive security test suite
+python3 test.py
 ```
 
 ### Requirements

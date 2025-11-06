@@ -1,0 +1,33 @@
+\begin{thebibliography}{1}
+
+\bibitem{nist2017digital}
+Paul~A Grassi, James~L Fenton, Elaine~M Newton, Ray~A Perlner, Andrew~R
+  Regenscheid, William~E Burr, Justin~P Richer, Naomi~B Lefkovitz, Jamie~M
+  Danker, Yee-Yin Choong, Kristen~K Greene, and Mary~F Theofanos.
+\newblock Digital identity guidelines: Authentication and lifecycle management.
+\newblock Technical Report NIST SP 800-63B, National Institute of Standards and
+  Technology, 2017.
+\newblock \doi{10.6028/NIST.SP.800-63b}.
+
+\bibitem{paudel2024priming}
+Rizu Paudel and Mahdi~Nasrullah Al-Ameen.
+\newblock Priming through persuasion: Towards secure password behavior.
+\newblock {\em Proceedings of the ACM on Human-Computer Interaction},
+  8(CSCW1):1--27, 2024.
+\newblock \doi{10.1145/3637387}.
+
+\bibitem{tian2025unraveling}
+Xiaoguang Tian.
+\newblock Unraveling the dynamics of password manager adoption: a deeper dive
+  into critical factors.
+\newblock {\em Information and Computer Security}, 33(1):117--139, 2025.
+\newblock \doi{10.1108/ICS-09-2023-0156}.
+
+\bibitem{mustafa2024analysis}
+Nada Abdul~Aziz Mustafa.
+\newblock Analysis attackers' methods with hashing secure password using csprng
+  and pbkdf2.
+\newblock {\em Wasit Journal of Engineering Sciences}, 12(2):60--70, 2024.
+\newblock \doi{10.31185/ejuow.Vol12.Iss2.502}.
+
+\end{thebibliography}
