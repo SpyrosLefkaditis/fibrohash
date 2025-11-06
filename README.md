@@ -6,7 +6,7 @@
 [![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Security Audit](https://img.shields.io/badge/security-audited-green.svg)](https://github.com/SpyrosLefkaditis/fibrohash)
-[![JOSS Status](https://img.shields.io/badge/JOSS-under%20review-orange.svg)](https://joss.theoj.org/)
+[![arXiv](https://img.shields.io/badge/arXiv-submitted-red.svg)](https://arxiv.org)
 
 FibroHash is a research-focused, cryptographically secure password generation framework designed for system administrators and security professionals. It implements a novel multi-layered cryptographic approach combining PBKDF2 key derivation, HMAC-based entropy generation, and mathematical sequence algorithms to produce passwords with guaranteed entropy levels exceeding 190 bits.
 
@@ -409,8 +409,8 @@ fibrohash/
 ├── security_utils.py          # Security analysis and validation
 ├── test.py                   # Comprehensive test suite
 ├── setup.py                  # Package configuration
-├── paper.md                  # JOSS research paper
-├── paper.bib                 # Bibliography
+├── main.tex                  # arXiv research paper (LaTeX)
+├── references.bib            # Bibliography for arXiv submission
 ├── CONTRIBUTING.md           # Contribution guidelines
 ├── docs/                     # Documentation directory
 ├── .github/workflows/        # CI/CD configuration
@@ -441,14 +441,18 @@ python3 -m pytest  # Unit tests (when available)
 If you use FibroHash in your research, please cite:
 
 ```bibtex
-@article{lefkaditis2025fibrohash,
+@misc{lefkaditis2025fibrohash,
   title={FibroHash: A Cryptographically Secure Password Generation Framework for System Administration},
   author={Lefkaditis, Spyros},
-  journal={Journal of Open Source Software},
   year={2025},
-  note={Under review}
+  eprint={arXiv:XXXX.XXXXX},
+  archivePrefix={arXiv},
+  primaryClass={cs.CR},
+  note={Submitted to arXiv}
 }
 ```
+
+*Note: arXiv ID will be updated upon publication*
 
 ## License
 
