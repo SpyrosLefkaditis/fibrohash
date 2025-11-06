@@ -6,7 +6,9 @@
 [![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Security Audit](https://img.shields.io/badge/security-audited-green.svg)](https://github.com/SpyrosLefkaditis/fibrohash)
-[![arXiv](https://img.shields.io/badge/arXiv-submitted-red.svg)](https://arxiv.org)
+[![Zenodo DOI](https://img.shields.io/badge/DOI-pending-orange.svg)](https://zenodo.org)
+
+> **📄 Research Paper**: This work is published as an academic paper on Zenodo with full technical methodology and cryptographic analysis. See `main.pdf` for the complete research documentation.
 
 FibroHash is a research-focused, cryptographically secure password generation framework designed for system administrators and security professionals. It implements a novel multi-layered cryptographic approach combining PBKDF2 key derivation, HMAC-based entropy generation, and mathematical sequence algorithms to produce passwords with guaranteed entropy levels exceeding 190 bits.
 
@@ -445,14 +447,13 @@ If you use FibroHash in your research, please cite:
   title={FibroHash: A Cryptographically Secure Password Generation Framework for System Administration},
   author={Lefkaditis, Spyros},
   year={2025},
-  eprint={arXiv:XXXX.XXXXX},
-  archivePrefix={arXiv},
-  primaryClass={cs.CR},
-  note={Submitted to arXiv}
+  publisher={Zenodo},
+  doi={10.5281/zenodo.XXXXXX},
+  note={Published on Zenodo}
 }
 ```
 
-*Note: arXiv ID will be updated upon publication*
+*Note: Zenodo DOI will be updated upon publication*
 
 ## License
 
