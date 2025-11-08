@@ -1,14 +1,5 @@
 \begin{thebibliography}{1}
 
-\bibitem{nist2017digital}
-Paul~A Grassi, James~L Fenton, Elaine~M Newton, Ray~A Perlner, Andrew~R
-  Regenscheid, William~E Burr, Justin~P Richer, Naomi~B Lefkovitz, Jamie~M
-  Danker, Yee-Yin Choong, Kristen~K Greene, and Mary~F Theofanos.
-\newblock Digital identity guidelines: Authentication and lifecycle management.
-\newblock Technical Report NIST SP 800-63B, National Institute of Standards and
-  Technology, 2017.
-\newblock \doi{10.6028/NIST.SP.800-63b}.
-
 \bibitem{paudel2024priming}
 Rizu Paudel and Mahdi~Nasrullah Al-Ameen.
 \newblock Priming through persuasion: Towards secure password behavior.

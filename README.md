@@ -1,7 +1,7 @@
 
 
 
-# FibroHash: Cryptographically Secure Password Generation Framework
+# FibroHash: Comprehensive Cryptographic Password Generation Framework
 
 [![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -9,35 +9,66 @@
 [![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17546159.svg)](https://doi.org/10.5281/zenodo.17546159)
 [![OpenAIRE](https://img.shields.io/badge/OpenAIRE-indexed-blue.svg)](https://explore.openaire.eu/)
 
-> **📄 Published Research**: This work is published as an academic paper on Zenodo with DOI [10.5281/zenodo.17546159](https://doi.org/10.5281/zenodo.17546159). The paper presents complete technical methodology, cryptographic analysis, and reproducible implementation details. See `main.pdf` for the full research documentation.
+> **📄 Published Documentation**: This work is published on Zenodo with DOI [10.5281/zenodo.17546159](https://doi.org/10.5281/zenodo.17546159). The documentation presents complete technical methodology, cryptographic analysis, and implementation details for educational purposes. See `main.pdf` for the full technical documentation.
 
-FibroHash is a research-focused, cryptographically secure password generation framework designed for system administrators and security professionals. It implements a novel multi-layered cryptographic approach combining PBKDF2 key derivation, HMAC-based entropy generation, and mathematical sequence algorithms to produce passwords with guaranteed entropy levels exceeding 190 bits.
+FibroHash is a comprehensive, cryptographically secure password generation framework designed for system administrators, security professionals, and educational use. It implements industry-standard cryptographic techniques including PBKDF2 key derivation and multi-round entropy generation using Python's `secrets` module, enhanced with built-in security analysis and compliance validation tools. The framework produces secure, non-reproducible passwords with measured entropy levels of 150+ bits for 32-character passwords.
 
-## Research Applications
+## Primary Applications
 
-- **System Administration**: Secure password generation for enterprise environments
-- **Security Research**: Reproducible password security analysis and entropy validation
-- **Compliance Auditing**: Automated validation against NIST, PCI DSS, and ISO standards
-- **Cryptographic Education**: Teaching modern password security and entropy analysis
+- **System Administration**: Production-ready secure password generation with comprehensive analysis
+- **Security Auditing**: Built-in password quality analysis and security validation
+- **Educational Use**: Transparent implementation for studying modern cryptographic practices
+- **Enterprise Security**: Configurable security levels and detailed entropy reporting
 
 ## Key Features
 
 - **🔐 Cryptographic Security**: PBKDF2-HMAC-SHA256 with 1,000-10,000 configurable iterations
 - **📊 Entropy Analysis**: Built-in Shannon entropy calculation and character distribution analysis
-- **✅ Standards Compliance**: NIST SP 800-63B, PCI DSS, ISO/IEC 27001 validation
+- **✅ Security Validation**: Password quality analysis and entropy measurement
 - **🔬 Research Tools**: Comprehensive security auditing and reproducible testing framework
 - **📱 Zero Dependencies**: Uses only Python standard library for maximum security
 - **🌐 Offline Operation**: No network communication or external service dependencies
 
+## Why FibroHash vs Standard Tools?
+
+### **🎯 Unique Value Proposition**
+
+**Standard Tools** (`secrets.token_urlsafe()`, password managers):
+- ✅ Simple and reliable
+- ✅ Pure randomness (~190+ bits theoretical entropy)
+- ❌ Limited security analysis capabilities
+- ❌ No compliance reporting features
+
+**FibroHash**:
+- ✅ **Comprehensive Analysis**: Built-in entropy measurement, security auditing, and compliance validation
+- ✅ **Production Ready**: Cryptographically secure using industry-standard PBKDF2 and Python's `secrets` module
+- ✅ **Security Analysis**: Comprehensive entropy analysis and password quality validation
+- ✅ **Transparent Implementation**: All cryptographic operations visible and well-documented for auditability
+- ✅ **Configurable Security**: Multiple security levels (1K-10K PBKDF2 iterations) for different environments
+- ✅ **Enhanced Security**: 150+ bit entropy through multi-round generation with multiple entropy sources
+
+### **🏢 Primary Use Cases**
+
+1. **System Administration**: Secure password generation for servers, databases, and service accounts
+2. **Security Auditing**: Compliance validation and entropy analysis for enterprise environments  
+3. **Educational and Training**: Hands-on learning of cryptographic password security practices
+4. **Development Integration**: Programmable API for incorporating secure password generation into applications
+
 ## Cryptographic Methodology
 
-FibroHash implements a novel multi-stage cryptographic pipeline:
+FibroHash demonstrates standard multi-stage cryptographic practices:
 
 ```
 User Input → Validation → PBKDF2-HMAC-SHA256 → Multi-Round Generation
                                                         ↓
-Secure Password ← Character Encoding ← Entropy Mixing ← HMAC-Based Generation
+Secure Password ← Character Encoding ← Entropy Mixing ← HMAC + secrets.token_bytes()
 ```
+
+### 🔍 **Open Source & Transparent**
+
+**Complete implementation available**: All cryptographic operations are fully implemented in [`main.py`](main.py) and [`security_utils.py`](security_utils.py) - no hidden functionality or external dependencies.
+
+**Verifiable Claims**: Run `python3 test.py` to independently verify entropy measurements and security properties.
 
 ### Core Algorithm
 
@@ -49,17 +80,19 @@ Secure Password ← Character Encoding ← Entropy Mixing ← HMAC-Based Generat
 
 ### Security Properties
 
-- **Theoretical Entropy**: 192+ bits for 32-character passwords
-- **Salt Uniqueness**: Cryptographically secure salt for each generation
-- **Timing Attack Resistance**: Consistent operation times regardless of input
+- **Measured Entropy**: 150+ bits for 32-character passwords (using standard techniques)
+- **Theoretical Maximum**: Up to 207+ bits with full 90-character set utilization
+- **Fresh Randomness**: Uses `secrets.token_bytes()` for cryptographically secure entropy
+- **Non-Reproducible**: Each generation produces different passwords for maximum security
 - **Pattern Avoidance**: Detection and mitigation of predictable sequences
+- **Multiple Entropy Sources**: Combines user input with cryptographic randomness
 
 ## Requirements
 
 - **Python**: 3.7+ (uses standard library only)
 - **Platform**: Cross-platform (Linux, macOS, Windows)
 - **Dependencies**: None (zero external dependencies for security)
-- **Memory**: <5MB footprint
+- **Memory**: <2MB footprint
 
 ## Installation
 
@@ -99,8 +132,8 @@ python3 test.py
 - **Python 3.7+** (uses standard library only)
 - **No external dependencies** (zero pip requirements for maximum security)
 - **Platform**: Cross-platform (Linux, macOS, Windows)
-- **Memory**: <5MB footprint
-- **Storage**: ~2MB for complete installation
+- **Memory**: <2MB footprint
+- **Storage**: <1MB for complete installation
 
 ### Verification
 
@@ -148,14 +181,15 @@ python3 test.py  # Includes examples and security validation
 ```python
 from main import generate_password
 from security_utils import generate_security_report
-from config import update_security_level
+from config import get_config
 
 # Basic password generation
 password = generate_password("secure research phrase", 32, "maximum")
 
-# Generate with custom configuration
-update_security_level("maximum")
-password = generate_password("enterprise phrase", 48, "maximum")
+# Generate with configuration validation
+config = get_config()
+if config.validate_password_length(48):
+    password = generate_password("enterprise phrase", 48, "maximum")
 
 # Security analysis and reporting
 report = generate_security_report(password)
@@ -267,40 +301,42 @@ FibroHash provides multiple configuration options:
 
 ```python
 # Modify config.py to adjust runtime parameters
-from config import update_security_level, get_configuration
+```python
+from config import get_config
 
-# Programmatically update configuration
-update_security_level("maximum")
-current_config = get_configuration()
+# Get current configuration
+config = get_config()
+current_level = config.get_security_param('default_security_level')
 
-# Custom configuration for specific use cases
-config = {
-    "pbkdf2_iterations": 15000,  # Custom high-security setting
-    "password_length": 48,       # Extended length
-    "security_level": "custom"
-}
+# Get security parameters for a specific level
+params = config.get_security_params("maximum")
+print(f"Iterations: {params['iterations']}, Key size: {params['key_size']}")
+
+# Validate configuration settings
+is_valid_length = config.validate_password_length(32)
+is_valid_level = config.validate_security_level("maximum")
 ```
 
 ### Configuration Management
 
 ```bash
 # View current configuration
-python3 -c "from config import get_configuration; print(get_configuration())"
+python3 -c "from config import get_config; config = get_config(); print(f'Security level: {config.get_security_param(\"default_security_level\")}')"
 
-# Validate configuration
-python3 -c "from config import validate_config; validate_config()"
+# Create default configuration file
+python3 -c "from config import create_default_config; create_default_config()"
 
-# Reset to defaults
-python3 -c "from config import reset_to_defaults; reset_to_defaults()"
+# Get security parameters
+python3 -c "from config import get_config; config = get_config(); print(config.get_security_params('high'))"
 ```
 
 ### Security Levels
 
-| Level | PBKDF2 Iterations | Key Size | Entropy | Research Use |
-|-------|------------------|----------|---------|--------------|
-| Standard | 1,000 | 32 bytes | 190+ bits | Educational/Testing |
-| High | 5,000 | 64 bytes | 192+ bits | Research/Production |
-| Maximum | 10,000 | 128 bytes | 195+ bits | High-security Research |
+| Level | PBKDF2 Iterations | Key Size | Measured Entropy | Research Use |
+|-------|------------------|----------|------------------|--------------|
+| Standard | 1,000 | 32 bytes | 150+ bits | Educational/Testing |
+| High | 5,000 | 64 bytes | 155+ bits | Research/Production |
+| Maximum | 10,000 | 128 bytes | 160+ bits | High-security Research |
 
 ## Testing & Validation
 
@@ -353,7 +389,7 @@ Analysis:
 - Character Types: 4/4 (uppercase, lowercase, digits, symbols)
 - Uniqueness: 100% (no repeated characters)
 - Security Score: 94/100
-- Compliance: ✅ NIST, PCI-DSS, ISO27001
+- Validation: ✅ Security checks passed
 ```
 
 ### Security Features Demonstration
@@ -372,10 +408,12 @@ Analysis:
 
 ### Cryptographic Properties
 
-- **Entropy**: 192+ bits theoretical entropy for 32-character passwords
+- **Measured Entropy**: 150+ bits actual entropy for 32-character passwords (exceeds AES-128)
+- **Theoretical Maximum**: 207+ bits with optimal character set utilization
 - **Salt**: Unique cryptographic salt for each password generation
 - **Key Derivation**: PBKDF2-HMAC-SHA256 with configurable iterations
 - **Timing Attacks**: Consistent operation times regardless of input
+- **Multiple Entropy Sources**: Combines user input, PBKDF2 derivation, and cryptographic randomness
 
 ### Best Practices
 
@@ -384,29 +422,30 @@ Analysis:
 - Validate entropy levels using provided analysis tools
 - Regular security audits using built-in compliance checking
 
-### Research Applications
+### Educational Applications
 
-- Reproducible password security analysis
-- Entropy distribution studies
-- Cryptographic algorithm validation
-- Security compliance verification
+- Password security analysis and entropy measurement learning
+- Cryptographic implementation study (PBKDF2, HMAC, entropy mixing)
+- Understanding security compliance requirements
+- Practical application of cryptographic best practices
 
-## Standards Compliance
+## Security Standards Alignment
 
-FibroHash implements and validates against:
+FibroHash follows established security best practices and guidelines:
 
-- **NIST SP 800-63B**: Digital identity guidelines for authentication
-- **PCI DSS**: Payment card industry data security standards  
-- **ISO/IEC 27001**: Information security management systems
-- **OWASP**: Open Web Application Security Project guidelines
+- **Industry Standards**: Implements PBKDF2-HMAC-SHA256 as recommended by security frameworks
+- **Password Security**: Follows modern password complexity and entropy requirements
+- **Cryptographic Practices**: Uses established algorithms and secure random number generation
+- **Best Practices**: Incorporates lessons from security research and vulnerability analysis
 
-### Automated Compliance Validation
+### Password Quality Validation
 
 ```python
 from security_utils import SecurePasswordValidator
 
 validator = SecurePasswordValidator()
-is_compliant, violations = validator.validate(password)
+is_valid, issues = validator.validate(password)
+print(f"Password valid: {is_valid}, Issues found: {len(issues)}")
 ```
 
 ## Project Structure
@@ -435,34 +474,25 @@ We welcome contributions from the research community! Please see [CONTRIBUTING.m
 ```bash
 git clone https://github.com/SpyrosLefkaditis/fibrohash.git
 cd fibrohash
-python3 -m pip install -e .[dev]
+
+# Make scripts executable (Linux/macOS)
+chmod +x setup.sh init.sh
+
+# No pip installation needed - uses only standard library
 ```
 
 ### Running Tests
 
 ```bash
-python3 test.py  # Security test suite
-python3 -m pytest  # Unit tests (when available)
+python3 test.py  # Comprehensive security test suite
+
+# Verify installation
+python3 -c "from main import generate_password; print('Installation successful')"
 ```
 
 ## Citation
 
-If you use FibroHash in your research, please cite:
-
-```bibtex
-@misc{lefkaditis2025fibrohash,
-  title={FibroHash: A Cryptographically Secure Password Generation Framework for System Administration},
-  author={Lefkaditis, Spyros},
-  year={2025},
-  publisher={Zenodo},
-  doi={10.5281/zenodo.XXXXXX},
-  note={Published on Zenodo}
-}
-```
-
-## Citation
-
-If you use FibroHash in your research, please cite our published paper:
+If you use FibroHash in your work or research, please cite our published documentation:
 
 ```bibtex
 @misc{lefkaditis2025fibrohash,
@@ -485,8 +515,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - Python Cryptography Community for establishing security best practices
-- NIST Cybersecurity Framework for security standards guidance
 - Open source security researchers and contributors
+- Academic research community for advancing password security methodologies
 
 ## Support
 
@@ -497,7 +527,17 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**Disclaimer**: FibroHash implements current cryptographic best practices. Users should evaluate security requirements and keep software updated. No cryptographic system provides absolute security.
+## Framework Overview
+
+**Purpose**: FibroHash is a comprehensive cryptographic password generation framework that implements industry-standard security practices with enhanced analysis and compliance validation capabilities.
+
+**Production Use**: The password generation is cryptographically secure using Python's `secrets` module and industry-standard PBKDF2-HMAC-SHA256. The framework is suitable for production use in system administration, security auditing, and educational environments.
+
+**Technical Approach**: This implementation combines proven cryptographic techniques (PBKDF2, HMAC, CSPRNG) with comprehensive security analysis tools, providing both secure password generation and detailed entropy validation for compliance and educational purposes.
+
+---
+
+**Technical Disclaimer**: FibroHash implements current cryptographic best practices for educational purposes. Users should evaluate security requirements and keep software updated. No cryptographic system provides absolute security.
 
 
 

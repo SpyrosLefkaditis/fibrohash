@@ -319,7 +319,7 @@ def run_security_test_suite():
         all_results.append(result)
         
         if 'error' not in result:
-            logger.info(f"Password: {result['password'][:10]}... (truncated)")
+            logger.info(f"Password: {result['password']}")
             logger.info(f"Length: {result['length']}")
             logger.info(f"Strength: {result['overall_strength']} (Score: {result['strength_score']}/100)")
             logger.info(f"Theoretical Entropy: {result['theoretical_entropy']:.2f} bits")
@@ -336,7 +336,7 @@ def run_security_test_suite():
     for level, result in security_level_results.items():
         logger.info(f"\nSecurity Level: {level.upper()}")
         if 'error' not in result:
-            logger.info(f"Password: {result['password'][:10]}... (truncated)")
+            logger.info(f"Password: {result['password']}")
             logger.info(f"Generation Time: {result['generation_time']:.4f}s")
             logger.info(f"Theoretical Entropy: {result['theoretical_entropy']:.2f} bits")
             logger.info(f"Character Analysis: {result['character_analysis']}")
@@ -368,7 +368,7 @@ def run_security_test_suite():
     ]
     
     for test_input, description in edge_cases:
-        logger.info(f"\nTesting {description}: ", end="")
+        logger.info(f"\nTesting {description}:")
         try:
             result = generate_password(test_input)
             logger.info(f"SUCCESS - Password generated (length: {len(result)})")

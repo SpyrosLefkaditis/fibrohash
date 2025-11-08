@@ -34,9 +34,9 @@ ORCID: 0009-0000-8432-4667}
 \maketitle
 
 \begin{abstract}
-FibroHash is an enterprise-grade, cryptographically secure password generation framework designed specifically for system administrators and security professionals. Unlike traditional password generators that rely on simple randomization, FibroHash implements a novel multi-layered cryptographic approach combining PBKDF2 key derivation, HMAC-based entropy generation, and mathematical sequence algorithms to produce passwords with guaranteed entropy levels exceeding 190 bits.
+FibroHash is a cryptographically secure password generation framework designed for system administrators and security professionals. The framework implements standard PBKDF2-HMAC-SHA256 key derivation combined with Python's cryptographically secure random number generator (CSPRNG) to produce high-entropy passwords with comprehensive security analysis capabilities.
 
-The framework addresses critical security gaps in existing password generation tools by implementing proper cryptographic salt handling, resistance to timing attacks, and compliance with modern security standards including NIST SP 800-63B \cite{nist2017digital}, PCI DSS, and ISO/IEC 27001. FibroHash operates entirely offline using only Python's standard library, ensuring no external dependencies or network communications that could compromise security.
+The framework provides secure password generation using established cryptographic primitives, proper salt handling, and quality assessment tools. FibroHash operates entirely offline using only Python's standard library, ensuring no external dependencies or network communications that could compromise security.
 
 \textbf{Keywords:} Python, cryptography, password generation, security, system administration, PBKDF2, entropy analysis
 \end{abstract}
@@ -48,17 +48,17 @@ System administrators and security professionals require password generation too
 FibroHash addresses these limitations by providing:
 
 \begin{enumerate}
-\item \textbf{Cryptographic Security}: Implementation of PBKDF2-HMAC-SHA256 with configurable iterations (1,000-10,000) following NIST SP 800-63B guidelines \cite{nist2017digital} ensuring resistance to rainbow table and brute-force attacks
-\item \textbf{Entropy Verification}: Built-in entropy analysis tools providing Shannon entropy calculations and character distribution analysis
-\item \textbf{Compliance Framework}: Automated validation against industry security standards with detailed audit reporting
-\item \textbf{Research Reproducibility}: Comprehensive test suite enabling security researchers to validate and extend the cryptographic methodology
+\item \textbf{Cryptographic Security}: Implementation of PBKDF2-HMAC-SHA256 with configurable iterations (1,000-10,000) using Python's secrets module for cryptographically secure randomness
+\item \textbf{Entropy Analysis}: Built-in entropy analysis tools providing Shannon entropy calculations and character distribution analysis
+\item \textbf{Quality Assessment}: Password quality validation with detailed security scoring and pattern detection
+\item \textbf{Research Reproducibility}: Comprehensive test suite enabling security researchers to validate and extend the methodology
 \end{enumerate}
 
 The framework has been designed with system administrators in mind, providing both command-line interfaces for operational use and programmatic APIs for integration into larger security frameworks.
 
 \section{Research Contribution and Methodology}
 
-FibroHash introduces an approach to password generation that combines mathematical sequence generation with modern cryptographic primitives \cite{nist2017digital}. The key contribution lies in the use of HMAC-based mathematical sequence generation, which provides the benefits of deterministic testing capabilities while maintaining cryptographic security through proper PBKDF2 key derivation.
+FibroHash implements a secure password generation approach combining PBKDF2-HMAC-SHA256 key derivation with HMAC-based entropy generation. The framework uses multiple entropy sources including multi-round HMAC sequence generation and Python's cryptographically secure random number generator (secrets module) to provide reproducible security analysis while maintaining cryptographic security.
 
 \subsection{Cryptographic Architecture}
 
@@ -67,14 +67,14 @@ The password generation process follows a multi-stage cryptographic pipeline:
 \begin{enumerate}
 \item \textbf{Input Processing}: User phrases undergo validation and sanitization to prevent injection attacks
 \item \textbf{Key Derivation}: PBKDF2-HMAC-SHA256 transforms user input and cryptographic salt into derived keys
-\item \textbf{Entropy Generation}: Multiple entropy sources including HMAC-based sequence generation and secure random number generation
+\item \textbf{Entropy Generation}: Multiple entropy sources including HMAC-based mathematical sequence generation and Python's secrets module for cryptographically secure randomness
 \item \textbf{Character Encoding}: Secure base conversion using extended character sets with 90+ characters
 \item \textbf{Quality Assurance}: Automated validation of character diversity and entropy levels
 \end{enumerate}
 
 \subsection{Security Analysis}
 
-The framework provides theoretical entropy levels of 192+ bits for 32-character passwords using a 90-character alphabet. Security analysis includes:
+The framework provides comprehensive security analysis including entropy calculations based on character set size and password length. Security analysis includes:
 
 \begin{itemize}
 \item \textbf{Timing Attack Resistance}: Consistent operation times regardless of input characteristics
@@ -148,7 +148,7 @@ FibroHash has applications in:
 \begin{itemize}
 \item \textbf{System Administration}: Secure password generation for server and service accounts
 \item \textbf{Security Research}: Reproducible password security analysis and entropy validation
-\item \textbf{Compliance Auditing}: Automated validation against security standards
+\item \textbf{Quality Assessment}: Automated password quality validation and security scoring
 \item \textbf{Educational Use}: Teaching cryptographic principles and password security
 \end{itemize}
 
@@ -156,9 +156,9 @@ The framework's emphasis on reproducible security analysis makes it particularly
 
 \section{Acknowledgements}
 
-The author acknowledges the Python cryptography community for establishing secure cryptographic practices and the NIST Cybersecurity Framework for providing security standards guidance.
+The author acknowledges the Python cryptography community for establishing secure cryptographic practices and the broader cybersecurity research community for advancing password security methodologies.
 
-\bibliographystyle{unsrt}
+\bibliographystyle{plain}
 \bibliography{references}
 
 \end{document}

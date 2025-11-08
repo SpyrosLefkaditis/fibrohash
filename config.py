@@ -40,7 +40,7 @@ class SecureConfig:
                 "high": 5,
                 "maximum": 10
             },
-            "fibonacci_bit_length": 2048,
+            "hmac_sequence_bit_length": 2048,
             "entropy_bit_length": 1024
         },
         "charset": {
@@ -197,7 +197,7 @@ class SecureConfig:
             "rounds": self.get_crypto_param("generation_rounds", {}).get(level, 5),
             "key_size": self.get_crypto_param("key_sizes", {}).get(level, 64),
             "iterations": self.get_crypto_param("pbkdf2_iterations", {}).get(level, 5000),
-            "fibonacci_bits": self.get_crypto_param("fibonacci_bit_length", 2048),
+            "hmac_sequence_bits": self.get_crypto_param("hmac_sequence_bit_length", 2048),
             "entropy_bits": self.get_crypto_param("entropy_bit_length", 1024)
         }
 

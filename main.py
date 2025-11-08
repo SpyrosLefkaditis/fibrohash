@@ -47,9 +47,9 @@ def validate_input(user_input: str) -> str:
     
     return sanitized
 
-def generate_cryptographic_fibonacci(seed: bytes, length: int) -> int:
+def generate_hmac_sequence(seed: bytes, length: int) -> int:
     """
-    Generate a Fibonacci-like number using cryptographic functions.
+    Generate cryptographically secure large integer using multi-round HMAC.
     
     Args:
         seed: Cryptographic seed bytes
@@ -115,7 +115,7 @@ def secure_base_conversion(n: int, target_length: int) -> str:
 def generate_password(user_input: str, password_length: Optional[int] = None, 
                      security_level: Optional[str] = None) -> str:
     """
-    Generate a cryptographically secure password using enhanced Fibonacci-based algorithm.
+    Generate a cryptographically secure password using PBKDF2 and multi-round HMAC entropy generation.
     
     Args:
         user_input: User's input phrase for password generation
@@ -168,8 +168,9 @@ def generate_password(user_input: str, password_length: Optional[int] = None,
             # Create unique seed for each round
             round_seed = salt + input_hash + round_num.to_bytes(4, 'big')
             
-            # Generate cryptographic Fibonacci-like number
-            crypto_fib = generate_cryptographic_fibonacci(round_seed, 2048)
+            # Generate cryptographic large integer using multi-round HMAC
+            hmac_bits = params.get('hmac_sequence_bits', 2048)
+            hmac_sequence = generate_hmac_sequence(round_seed, hmac_bits)
             
             # Create round-specific entropy
             round_entropy = secrets.randbits(1024)
@@ -178,7 +179,7 @@ def generate_password(user_input: str, password_length: Optional[int] = None,
             user_entropy = sum(ord(c) * (i + 1) for i, c in enumerate(sanitized_input))
             
             # Final combination using multiple cryptographic operations
-            combined = crypto_fib ^ round_entropy ^ user_entropy
+            combined = hmac_sequence ^ round_entropy ^ user_entropy
             combined = int.from_bytes(hashlib.sha512(combined.to_bytes(256, 'big')).digest(), 'big')
             
             # Convert to secure character representation

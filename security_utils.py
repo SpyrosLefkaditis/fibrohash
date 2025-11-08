@@ -36,7 +36,7 @@ class SecurityAuditor:
             'security_score': 0,
             'vulnerabilities': [],
             'recommendations': [],
-            'compliance': self._check_compliance(password)
+            'quality_checks': self._check_password_quality(password)
         }
         
         # Calculate overall security score
@@ -192,24 +192,24 @@ class SecurityAuditor:
         
         return found_substitutions
     
-    def _check_compliance(self, password: str) -> Dict[str, bool]:
-        """Check password compliance with various standards."""
-        compliance = {
-            'nist_basic': len(password) >= 8,
-            'nist_enhanced': len(password) >= 14,
-            'pci_dss': (len(password) >= 7 and 
+    def _check_password_quality(self, password: str) -> Dict[str, bool]:
+        """Check password quality against common requirements."""
+        quality_checks = {
+            'basic_length': len(password) >= 8,
+            'strong_length': len(password) >= 14,
+            'mixed_case_digits': (len(password) >= 7 and 
                        any(c.isupper() for c in password) and
                        any(c.islower() for c in password) and
                        any(c.isdigit() for c in password)),
-            'iso27001': (len(password) >= 8 and
+            'full_complexity': (len(password) >= 8 and
                         sum(1 for c in password if c.isupper()) >= 1 and
                         sum(1 for c in password if c.islower()) >= 1 and
                         sum(1 for c in password if c.isdigit()) >= 1 and
                         sum(1 for c in password if not c.isalnum()) >= 1),
-            'enterprise_minimum': len(password) >= 12
+            'enterprise_length': len(password) >= 12
         }
         
-        return compliance
+        return quality_checks
     
     def _calculate_security_score(self, audit_results: Dict[str, Any]) -> int:
         """Calculate overall security score (0-100)."""
@@ -398,7 +398,7 @@ def generate_security_report(password: str, save_to_file: bool = True) -> Dict[s
             'overall_rating': _get_rating_from_score(audit_results['security_score']),
             'key_strengths': _identify_strengths(audit_results),
             'key_weaknesses': _identify_weaknesses(audit_results, violations),
-            'compliance_status': audit_results['compliance']
+            'quality_status': audit_results['quality_checks']
         }
     }
     
