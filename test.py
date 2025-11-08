@@ -28,15 +28,20 @@ logger = logging.getLogger(__name__)
 
 def calculate_theoretical_entropy(password: str) -> float:
     """
-    Calculate the theoretical entropy of the password.
-    Entropy = log2(Number of possible password combinations)
+    Calculate realistic theoretical entropy based on actual character distribution.
+    Uses the same method as security_utils.py for consistency.
     """
-    config = get_config()
-    charset = config.get_charset()
-    charset_size = len(charset)
+    if not password:
+        return 0.0
+    
+    # Calculate entropy based on unique characters actually used (realistic)
+    charset_size = len(set(password))  # Only count unique chars in password
     password_length = len(password)
-    possible_combinations = charset_size ** password_length
-    return math.log2(possible_combinations)
+    
+    if charset_size <= 1:
+        return 0.0
+    
+    return password_length * math.log2(charset_size)
 
 def calculate_actual_entropy(password: str) -> float:
     """

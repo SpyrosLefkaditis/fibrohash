@@ -35,7 +35,7 @@ FibroHash is a comprehensive, cryptographically secure password generation frame
 
 **Standard Tools** (`secrets.token_urlsafe()`, password managers):
 - ✅ Simple and reliable
-- ✅ Pure randomness (~190+ bits theoretical entropy)
+- ✅ Pure randomness (~150 bits measured entropy for 32-character passwords)
 - ❌ Limited security analysis capabilities
 - ❌ No compliance reporting features
 
@@ -336,7 +336,7 @@ python3 -c "from config import get_config; config = get_config(); print(config.g
 |-------|------------------|----------|------------------|--------------|
 | Standard | 1,000 | 32 bytes | 150+ bits | Educational/Testing |
 | High | 5,000 | 64 bytes | 155+ bits | Research/Production |
-| Maximum | 10,000 | 128 bytes | 160+ bits | High-security Research |
+| Maximum | 10,000 | 128 bytes | 150+ bits | High-security Research |
 
 ## Testing & Validation
 
@@ -385,7 +385,7 @@ Security Level: High (32 characters)
 Password: K7#mP9$vL2@nR8&qT4!wE6%yU1^sA3*z
 
 Analysis:
-- Theoretical Entropy: 190.7 bits
+- Theoretical Entropy: 151.4 bits
 - Character Types: 4/4 (uppercase, lowercase, digits, symbols)
 - Uniqueness: 100% (no repeated characters)
 - Security Score: 94/100
