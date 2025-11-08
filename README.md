@@ -6,10 +6,10 @@
 [![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Security Audit](https://img.shields.io/badge/security-audited-green.svg)](https://github.com/SpyrosLefkaditis/fibrohash)
-[![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17546159.svg)](https://doi.org/10.5281/zenodo.17546159)
+[![Zenodo DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17560415.svg)](https://doi.org/10.5281/zenodo.17560415)
 [![OpenAIRE](https://img.shields.io/badge/OpenAIRE-indexed-blue.svg)](https://explore.openaire.eu/)
 
-> **📄 Published Documentation**: This work is published on Zenodo with DOI [10.5281/zenodo.17546159](https://doi.org/10.5281/zenodo.17546159). The documentation presents complete technical methodology, cryptographic analysis, and implementation details for educational purposes. See `main.pdf` for the full technical documentation.
+> **📄 Published Documentation**: This work is published on Zenodo with DOI [10.5281/zenodo.17560415](https://doi.org/10.5281/zenodo.17560415). The documentation presents complete technical methodology, cryptographic analysis, and implementation details for educational purposes. See `main.pdf` for the full technical documentation.
 
 FibroHash is a comprehensive, cryptographically secure password generation framework designed for system administrators, security professionals, and educational use. It implements industry-standard cryptographic techniques including PBKDF2 key derivation and multi-round entropy generation using Python's `secrets` module, enhanced with built-in security analysis and compliance validation tools. The framework produces secure, non-reproducible passwords with measured entropy levels of 150+ bits for 32-character passwords.
 
@@ -500,13 +500,13 @@ If you use FibroHash in your work or research, please cite our published documen
   author={Lefkaditis, Spyros},
   year={2025},
   publisher={Zenodo},
-  doi={10.5281/zenodo.17546159},
-  url={https://doi.org/10.5281/zenodo.17546159}
+  doi={10.5281/zenodo.17560415},
+  url={https://doi.org/10.5281/zenodo.17560415}
 }
 ```
 
 **APA Style:**
-Lefkaditis, S. (2025). *FibroHash: A Cryptographically Secure Password Generation Framework for System Administration* (Version 1.0). Zenodo. https://doi.org/10.5281/zenodo.17546159
+Lefkaditis, S. (2025). *FibroHash: A Cryptographically Secure Password Generation Framework for System Administration* (Version 2.0). Zenodo. https://doi.org/10.5281/zenodo.17560415
 
 ## License
 
